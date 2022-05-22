@@ -6,13 +6,13 @@ function home(req, res) {
 }
 
 function about(req, res) {
-  console.log("in about");
+  // console.log("in about");
   res.render("About");
 }
 
 function createProduct_Post(req, res) {
   const { image } = req.files;
-  console.log(req.files);
+  // console.log(req.files);
   image.mv(path.resolve("./public/images", image.name), (error) => {
     if (error) {
       res.send(error);
@@ -39,9 +39,9 @@ async function product(req, res) {
 
 async function productDetail(req, res) {
   const id = req.params.id;
-  console.log(id);
+  // console.log(id);
   const product = await productModal.findOne({ _id: id });
-  console.log(product);
+  // console.log(product);
   res.render("productDetail", { product });
 }
 
@@ -62,30 +62,51 @@ async function updateProduct(req, res) {
 async function updateProduct_Post(req, res) {
   const { name, price } = req.body;
   const id = req.params.id;
-  const { image } = req.files;
+  var updatedFields = {};
+  if (req.files !== null) {
+    const { image } = req.files;
+    updatedFields = {
+      name: name,
+      price: price,
+      image: image.name,
+    };
+    image.mv(path.resolve("./public/images", image.name), (error) => {
+      if (!error) {
+        productModal.updateOne(
+          {
+            _id: id,
+          },
+          updatedFields,
+          (err) => {
+            // console.log("in callback");
+            if (err) {
+              res.send(`Error: ` + err);
+            } else res.redirect("/product/api/");
+          }
+        );
+      } else {
+        res.send(error);
+      }
+    });
+  } else {
+    updatedFields = {
+      name: name,
+      price: price,
+    };
 
-  image.mv(path.resolve("./public/images", image.name), (error) => {
-    if (!error) {
-      productModal.updateOne(
-        {
-          _id: id,
-        },
-        {
-          name: name,
-          price: price,
-          image: image.name,
-        },
-        (err) => {
-          console.log("in callback");
-          if (err) {
-            res.send(`Error: ` + err);
-          } else res.redirect("/product/api/");
-        }
-      );
-    } else {
-      res.send(error);
-    }
-  });
+    productModal.updateOne(
+      {
+        _id: id,
+      },
+      updatedFields,
+      (err) => {
+        // console.log("in callback");
+        if (err) {
+          res.send(`Error: ` + err);
+        } else res.redirect("/product/api/");
+      }
+    );
+  }
 }
 
 function error(res, res) {

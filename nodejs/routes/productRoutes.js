@@ -1,5 +1,6 @@
 const express = require("express");
 const productController = require("../controllers/productController");
+const productMiddleware = require("../middlewares/productMiddleware");
 
 const productRoute = express();
 
@@ -7,7 +8,14 @@ productRoute.get("/", productController.home);
 
 productRoute.get("/about", productController.about);
 
-productRoute.post("/createProduct", productController.createProduct_Post);
+productRoute.post(
+  "/createProduct",
+  [
+    productMiddleware.checkInputValidityMiddleware,
+    productMiddleware.checkAnOtherMiddleware,
+  ],
+  productController.createProduct_Post
+);
 
 productRoute.get("/createProduct", productController.createProduct);
 
