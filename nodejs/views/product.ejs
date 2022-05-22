@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Products</title>
+</head>
+<body>
+    <%- include('../public/layout/header') %>
+    <h1>products</h1>
+  
+
+   <table border="1" style="padding:50px;">
+        <% 
+        for(let product in products){
+            %>
+
+       <tr >
+            <td>
+                <a href=<%='/product/api/productDetail/' +products[product]._id%> >
+                    <%=products[product].name%>
+                </a>
+            </td>
+            <td>
+              
+                <%=products[product].price%>
+            </td>
+            <td>
+                <img  src='/images/<%= products[product].image%>' width="200px" height="200px" />
+            </td>
+            <td><button  style="background-color: red; cursor: pointer;"
+                 onclick="deleteRecord('<%= products[product]._id %>')" >
+               <a href="/product/api/deleteProduct/<%= products[product]._id %>">Delete</a> </button></td>
+            <td><button style="background-color: greenyellow; cursor: pointer;" onclick="">
+                <a href="/product/api/updateProduct/<%= products[product]._id %>">Update</a></button></td>
+        </tr>
+        
+       
+        <%
+        }
+        %>
+        <!-- <%= products.length %> -->
+   </table>
+  
+   
+
+</body>
+</html>
