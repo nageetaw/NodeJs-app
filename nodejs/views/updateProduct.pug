@@ -1,0 +1,16 @@
+doctype html    
+html 
+    head 
+        title Update Product 
+    body 
+        h1 Update Product 
+        form(action="/product/api/updateProduct/"+product._id  method="post" enctype="multipart/form-data")
+            input(type="text" value=product.name name="name")
+            br
+            input(type="text" value=product.price name="price")
+            br
+            input(type="file" name="image")
+            br
+            img(src="/images/"+product.image alt="product image" width="200")
+            br
+            button(type="submit" value="Update" style="background-color:blue; color:white")  update     

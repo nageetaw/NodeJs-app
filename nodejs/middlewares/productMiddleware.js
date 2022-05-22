@@ -1,4 +1,5 @@
 function checkInputValidityMiddleware(req, res, move) {
+  console.log("checking first middle ware");
   if (!req.body.name || !req.body.price || !req.files.image) {
     res.redirect("/product/api/createProduct");
   } else {

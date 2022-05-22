@@ -34,15 +34,15 @@ app.use(cors());
 app.use(fileUpload());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false })); // to recieve body and url paarmeters
-// app.use("/product/api", productRoutes);
+app.use("/product/api", productRoutes);
 
 // set ejs as default engine
-app.set("view engine", "ejs");
+// app.set("view engine", "ejs");
 // app.set("views", path.join(__dirname, "views"));
-//app.set("view engine", "pug");
+app.set("view engine", "pug");
 
-app.get("/", function (req, res) {
-  res.render("about");
-});
+// app.get("/", function (req, res) {
+//   res.render("home");
+// });
 // listen to port
 app.listen(PORT);

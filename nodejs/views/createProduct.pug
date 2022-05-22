@@ -1,0 +1,14 @@
+doctype html 
+html 
+    head 
+        title Create product 
+    body 
+        h1 Create Product 
+        form(action="/product/api/createProduct" method="post" enctype="multipart/form-data")  
+            input(type="text" name="name" placeholder="name")
+            br
+            input(type="text" name="price" placeholder="price") 
+            br
+            input(type="file" value="choose file" name="image")
+            br
+            button(type="submit" value="Createproduct" ) Submit  
